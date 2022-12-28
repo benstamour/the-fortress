@@ -7,6 +7,8 @@ TagManager:
   - Collectible
   - DeathZone
   - Character
+  - GrassSphere
+  - RisingTile
   layers:
   - Default
   - TransparentFX

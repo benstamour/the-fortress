@@ -5,12 +5,13 @@ using UnityEngine;
 // script for when player is on a special object
 public class CharacterPlatform : MonoBehaviour
 {
-	private bool rampTrapTriggered = false; // mini spikeball trap
+	//private Character characterScript;
+	//private bool onSphere = false;
 	
     // Start is called before the first frame update
     void Start()
     {
-        
+        //characterScript = gameObject.GetComponent<Character>();
     }
 
     // Update is called once per frame
@@ -22,27 +23,34 @@ public class CharacterPlatform : MonoBehaviour
 	void FixedUpdate()
 	{
 		RaycastHit hit;
+		/*if((Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity) && hit.collider.gameObject.tag == "GrassSphere") || (Physics.Raycast(transform.position + new Vector3(0.25f,0,0), transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity) && hit.collider.gameObject.tag == "GrassSphere") || (Physics.Raycast(transform.position + new Vector3(-0.25f,0,0), transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity) && hit.collider.gameObject.tag == "GrassSphere") || (Physics.Raycast(transform.position + new Vector3(0,0,0.25f), transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity) && hit.collider.gameObject.tag == "GrassSphere") || (Physics.Raycast(transform.position + new Vector3(0,0,-0.25f), transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity) && hit.collider.gameObject.tag == "GrassSphere"))
+		//if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity) && hit.collider.gameObject.tag == "GrassSphere" && hit.distance <= 0.5 && this.onSphere == false)
+		{
+			if(hit.distance <= 0.5)
+			{
+				this.onSphere = true;
+				StartCoroutine(OnSphere());
+			}
+		}*/
 		if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity))
 		{
-			// if the player is located on the circuit tile, lifting platform, or moving floating platforms, the player becomes a child of that object since they should move with it
-			if((hit.collider.gameObject.name == "Circuit Tile" || hit.collider.gameObject.name == "Lifting Platform" || hit.collider.gameObject.tag == "BoulderPlatform") && hit.distance <= 1.3)
+			if((hit.collider.gameObject.tag == "RisingTile") && hit.distance <= 1.3)
 			{
+				Debug.Log("A");
 				gameObject.transform.parent = hit.collider.gameObject.transform;
 			}
-			// once the player lands on the spikeball ramp, release the mini spikeball trap
-			else if(this.rampTrapTriggered == false && hit.collider.gameObject.tag == "Spikeball Ramp")
+			else if(hit.collider.gameObject.name == "RisingWaterEnter")
 			{
 				gameObject.transform.parent = null;
-				GameObject miniSpikeballs = GameObject.Find("Mini Spikeballs");
-				foreach(Transform child in miniSpikeballs.transform)
-				{
-					Rigidbody rb = child.GetComponent<Rigidbody>();
-					rb.useGravity = true;
-					rb.isKinematic = false;
-				}
-				this.rampTrapTriggered = true;
+				RisingWater risingWaterScript = GameObject.Find("RisingWaterCube").GetComponent<RisingWater>();
+				//SpikedWall crusherWallScript = GameObject.Find("CrusherWall").GetComponent<SpikedWall>();
+				//SpikedWall wallSpikesScript = GameObject.Find("WallSpikes").GetComponent<SpikedWall>();
+				risingWaterScript.TriggerWater();
+				//crusherWallScript.TriggerCrusher();
+				//wallSpikesScript.TriggerCrusher();
+				SlidingDoor slidingDoorScript = GameObject.Find("SlidingDoor").GetComponent<SlidingDoor>();
+				slidingDoorScript.TriggerDoor();
 			}
-			// if the player is not located on any of those, they should not have a parent as they are not moving with any other object
 			else
 			{
 				gameObject.transform.parent = null;
@@ -53,4 +61,33 @@ public class CharacterPlatform : MonoBehaviour
 			gameObject.transform.parent = null;
 		}
 	}
+	
+	/*void OnCollisionEnter(Collision col)
+    {
+		if(this.onSphere && col.gameObject.tag != "GrassSphere")
+		{
+			this.onSphere = false;
+		}
+    }
+	
+	
+	IEnumerator OnSphere()
+	{
+		while(this.onSphere)
+		{
+			if(characterScript.getJumping())
+			{
+				this.onSphere = false;
+			}
+			if(this.onSphere == true)
+			{
+				gameObject.transform.position = Vector3.MoveTowards(this.transform.position, this.transform.position + new Vector3(0,0,1), 10f*Time.deltaTime);
+				yield return null;
+			}
+			else
+			{
+				break;
+			}
+		}
+	}*/
 }

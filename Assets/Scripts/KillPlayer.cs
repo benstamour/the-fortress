@@ -22,12 +22,14 @@ public class KillPlayer : MonoBehaviour
     {
 		if(col.gameObject.tag == "DeathZone")
 		{
+			//Debug.Log("A");
 			Respawn();
 		}
     }
 	
 	public void LaserHit()
 	{
+		//Debug.Log("B");
 		Respawn();
 	}
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +31,8 @@ public class Character : MonoBehaviour
 	private bool isTurningLeft = false;
 	private bool isTurningRight = false;
 	
+	//private int changingController = 0;
+	
     // Start is called before the first frame update
     void Start()
     {
@@ -60,7 +63,11 @@ public class Character : MonoBehaviour
 			this.transform.Rotate(this.rotation);
 			
 			// character Y movement/jumping
-			if (Input.GetButton("Jump") && groundedPlayer)
+			/*if(animator.IsInTransition(0))
+			{
+				Debug.Log(AnimPlaying("Idle2").ToString() + AnimPlaying("Walking2").ToString() + AnimPlayingTag("jump").ToString() + animator.GetBool("isJumping").ToString());
+			}*/
+			if (Input.GetButton("Jump") && groundedPlayer)// && !animator.GetBool("isJumping"))// && !(animator.IsInTransition(0) && AnimPlaying("Jumping")))
 			{
 				playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
 				
@@ -148,6 +155,15 @@ public class Character : MonoBehaviour
 			{
 				animator.SetBool("isJumping", false);
 				animator.SetBool("isIdle", true);
+				StartCoroutine(ChangeCharController(0));
+				//this.characterController.height = 1.6f;
+				//this.characterController.center = new Vector3(0f, 0.8f, 0f);
+			}
+			else if(this.isJumping)
+			{
+				StartCoroutine(ChangeCharController(1));
+				//this.characterController.height = 1f;
+				//this.characterController.center = new Vector3(0f, 1f, 0f);
 			}
 			characterController.Move(playerVelocity*Time.deltaTime);
 		}
@@ -192,5 +208,67 @@ public class Character : MonoBehaviour
 	private bool AnimPlaying(string stateName)
 	{
 		return AnimPlaying() && this.animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
+	}
+	
+	private bool AnimPlayingTag(string tagName)
+	{
+		return AnimPlaying() && this.animator.GetCurrentAnimatorStateInfo(0).IsTag(tagName);
+	}
+	
+	public bool getJumping()
+	{
+		return animator.GetBool("isJumping");
+	}
+	
+	// temporarily change character controller size when jumping so that it doesn't block the
+	// character from jumping onto higher surfaces
+	IEnumerator ChangeCharController(int dir)
+	{
+		if(dir == 0)
+		{
+			float timeToChange = 1f;
+			float centerChange = -0.2f/timeToChange;
+			float heightChange = 0.6f/timeToChange;
+			float targetCenter = 0.8f;
+			float targetHeight = 1.6f;
+			while(true)
+			{
+				Vector3 center = this.characterController.center;
+				float height = this.characterController.height;
+				this.characterController.center = new Vector3(0, this.characterController.center.y + centerChange * Time.deltaTime, 0);
+				this.characterController.height += heightChange * Time.deltaTime;
+				//Debug.Log("A" + this.characterController.height.ToString() + " " + this.characterController.center.ToString());
+				if(Math.Abs(this.characterController.height - targetHeight) <= 0.05 && Math.Abs(this.characterController.center.y - targetCenter) <= 0.05)
+				{
+					this.characterController.height = targetHeight;
+					this.characterController.center = new Vector3(0, targetCenter, 0);
+					break;
+				}
+				yield return null;
+			}
+		}
+		else
+		{
+			float timeToChange = 3f;
+			float centerChange = 0.2f/timeToChange;
+			float heightChange = -0.6f/timeToChange;
+			float targetCenter = 1.0f;
+			float targetHeight = 1.1f;
+			while(true)
+			{
+				Vector3 center = this.characterController.center;
+				float height = this.characterController.height;
+				this.characterController.center = new Vector3(0, this.characterController.center.y + centerChange * Time.deltaTime, 0);
+				this.characterController.height += heightChange * Time.deltaTime;
+				//Debug.Log("B" + this.characterController.height.ToString() + " " + this.characterController.center.ToString());
+				if(Math.Abs(this.characterController.height - targetHeight) <= 0.2 && Math.Abs(this.characterController.center.y - targetCenter) <= 0.05)
+				{
+					this.characterController.height = targetHeight;
+					this.characterController.center = new Vector3(0, targetCenter, 0);
+					break;
+				}
+				yield return null;
+			}
+		}
 	}
 }
