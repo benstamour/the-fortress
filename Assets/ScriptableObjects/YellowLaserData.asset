@@ -23,7 +23,7 @@ MonoBehaviour:
     m_angularRange: 360
     m_raysNumber: 1
     m_minRadialDistance: 0
-    m_maxRadialDistance: 25
+    m_maxRadialDistance: 50
     m_rotate: 1
     m_rotateClockwise: 1
     m_rotationSpeed: 0

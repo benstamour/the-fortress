@@ -30,6 +30,7 @@ public class Lever : MonoBehaviour
 		// if the player presses E while near the lever, activate it
         if (Input.GetKeyDown(KeyCode.E) && NearView())
 		{
+			Debug.Log("A");
 			activate();
 		}
     }
@@ -104,6 +105,25 @@ public class Lever : MonoBehaviour
 			{
 				slidingDoorScript.TriggerDoor2();
 			}
+		}
+		
+		// else if this lever is for the cyan lasers, deactivate them
+		else if(this.gameObject.transform.parent.name == "CyanLaserLever")
+		{
+			GameObject cyanLasers = GameObject.Find("CyanLasers");
+			cyanLasers.SetActive(false);
+		}
+		// else if this lever is for the red lasers, deactivate them
+		else if(this.gameObject.transform.parent.name == "RedLaserLever")
+		{
+			GameObject redLasers = GameObject.Find("RedLasers");
+			redLasers.SetActive(false);
+		}
+		// else if this lever is for the yellow lasers, deactivate them
+		else if(this.gameObject.transform.parent.name == "YellowLaserLever")
+		{
+			GameObject redLasers = GameObject.Find("YellowLasers");
+			redLasers.SetActive(false);
 		}
 	}
 }

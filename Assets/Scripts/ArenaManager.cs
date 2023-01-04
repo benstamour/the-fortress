@@ -14,11 +14,13 @@ public class ArenaManager : MonoBehaviour
 	[SerializeField] private float startX;
 	[SerializeField] private float startY;
 	[SerializeField] private float startZ;
+	[SerializeField] private float startRot;
 	
 	[SerializeField] private bool useTestLoc;
 	[SerializeField] private float testX;
 	[SerializeField] private float testY;
 	[SerializeField] private float testZ;
+	[SerializeField] private float testRot;
 	
 	//public Canvas pauseScreen;
 	//private bool paused = false;
@@ -32,13 +34,17 @@ public class ArenaManager : MonoBehaviour
 		
 		// location that character begins at
 		Vector3 startLoc = Vector3.zero;
+		float yRot = 0;
 		if(useTestLoc)
 		{
 			startLoc = new Vector3(testX, testY, testZ);
+			yRot = startRot;
+			
 		}
 		else
 		{
 			startLoc = new Vector3(startX, startY, startZ);
+			yRot = testRot;
 		}
 		
 		// this block should only be executed during testing
@@ -66,27 +72,27 @@ public class ArenaManager : MonoBehaviour
 		{
 			case "Seraz":
 			{
-				Instantiate(serazPrefab, startLoc, Quaternion.identity);
+				Instantiate(serazPrefab, startLoc, Quaternion.Euler(0,yRot,0));
 				break;
 			}
 			case "Aesta":
 			{
-				Instantiate(aestaPrefab, startLoc, Quaternion.identity);
+				Instantiate(aestaPrefab, startLoc, Quaternion.Euler(0,yRot,0));
 				break;
 			}
 			case "Gavaan":
 			{
-				Instantiate(gavaanPrefab, startLoc, Quaternion.identity);
+				Instantiate(gavaanPrefab, startLoc, Quaternion.Euler(0,yRot,0));
 				break;
 			}
 			case "Xalerie":
 			{
-				Instantiate(xaleriePrefab, startLoc, Quaternion.identity);
+				Instantiate(xaleriePrefab, startLoc, Quaternion.Euler(0,yRot,0));
 				break;
 			}
 			default:
 			{
-				Instantiate(gavaanPrefab, startLoc, Quaternion.identity);
+				Instantiate(gavaanPrefab, startLoc, Quaternion.Euler(0,yRot,0));
 				break;
 			}
 		}
