@@ -17,6 +17,8 @@ public class Character : MonoBehaviour
 	private float turnSpeed = 1.5f;
 	private Vector3 rotation;
 	[SerializeField] private bool isActive = true; // should the character be allowed to move? (false when player reaches end zone)
+	[SerializeField] private float scaleVal = 1.5f; // different character prefabs have different collider values due to scaling
+	private float multiplier;
 	
 	// game data
 	private int score = 0; // number of orbs collected
@@ -40,6 +42,7 @@ public class Character : MonoBehaviour
 		this.startTime = Time.time;
 		this.gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 		this.gameManagerScript.incrementAttempts();
+		this.multiplier = this.scaleVal/1.5f;
     }
 
     // Update is called once per frame
@@ -229,8 +232,8 @@ public class Character : MonoBehaviour
 			float timeToChange = 1f;
 			float centerChange = -0.2f/timeToChange;
 			float heightChange = 0.6f/timeToChange;
-			float targetCenter = 0.8f;
-			float targetHeight = 1.6f;
+			float targetCenter = 0.8f/this.multiplier;
+			float targetHeight = 1.6f/this.multiplier;
 			while(true)
 			{
 				Vector3 center = this.characterController.center;
@@ -252,8 +255,8 @@ public class Character : MonoBehaviour
 			float timeToChange = 3f;
 			float centerChange = 0.2f/timeToChange;
 			float heightChange = -0.6f/timeToChange;
-			float targetCenter = 1.0f;
-			float targetHeight = 1.1f;
+			float targetCenter = 1.0f/this.multiplier;
+			float targetHeight = 1.1f/this.multiplier;
 			while(true)
 			{
 				Vector3 center = this.characterController.center;

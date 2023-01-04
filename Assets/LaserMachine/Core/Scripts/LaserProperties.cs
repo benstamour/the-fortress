@@ -21,7 +21,7 @@ public class LaserProperties
 
     public float m_rayWidth = 0.01f;
     [Range( 1f , 360f)] public float m_angularRange = 360f;
-    [Range( 1 , 50 )] public int m_raysNumber = 8; 
+    [Range( 0 , 50 )] public int m_raysNumber = 8; 
     public float m_minRadialDistance = 1;	
 	public float m_maxRadialDistance = 25;
     

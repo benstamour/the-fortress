@@ -34,7 +34,7 @@ public class CharacterPlatform : MonoBehaviour
 		}*/
 		if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity))
 		{
-			if((hit.collider.gameObject.tag == "RisingTile") && hit.distance <= 1.3)
+			if((hit.collider.gameObject.tag == "RisingTile") && hit.distance <= 0.1)
 			{
 				Debug.Log("A");
 				gameObject.transform.parent = hit.collider.gameObject.transform;
@@ -50,6 +50,14 @@ public class CharacterPlatform : MonoBehaviour
 				//wallSpikesScript.TriggerCrusher();
 				SlidingDoor slidingDoorScript = GameObject.Find("SlidingDoor").GetComponent<SlidingDoor>();
 				slidingDoorScript.TriggerDoor();
+			}
+			else if(hit.collider.gameObject.tag == "SteppingStone" && hit.distance <= 0.1)// gameObject.transform.position.y <= -5.4)
+			{
+				Debug.Log(hit.distance);
+				gameObject.transform.parent = null;//hit.collider.gameObject.transform;
+				SteppingStone steppingStoneScript = hit.collider.gameObject.GetComponent<SteppingStone>();
+				steppingStoneScript.TriggerFall();
+				
 			}
 			else
 			{

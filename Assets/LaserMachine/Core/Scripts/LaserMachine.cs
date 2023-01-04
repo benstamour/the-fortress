@@ -230,6 +230,11 @@ public class LaserMachine : MonoBehaviour {
         }
         
     }
+	
+	public void RemoveLasers()
+	{
+		this.elementsList = new List<LaserElement>();
+	}
 
     /*
     EXAMPLE : 

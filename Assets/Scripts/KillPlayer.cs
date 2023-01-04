@@ -12,7 +12,7 @@ public class KillPlayer : MonoBehaviour
         
     }
 	
-	void Respawn()
+	public void Respawn()
 	{
 		SceneManager.LoadScene("Arena");
 	}
@@ -22,14 +22,21 @@ public class KillPlayer : MonoBehaviour
     {
 		if(col.gameObject.tag == "DeathZone")
 		{
-			//Debug.Log("A");
+			Respawn();
+		}
+    }
+	
+	// when player gets killed, reload the level
+    void OnTriggerEnter(Collider other)
+    {
+		if(other.gameObject.tag == "DeathZone")
+		{
 			Respawn();
 		}
     }
 	
 	public void LaserHit()
 	{
-		//Debug.Log("B");
 		Respawn();
 	}
 }
