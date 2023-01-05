@@ -36,7 +36,7 @@ public class CharacterPlatform : MonoBehaviour
 		{
 			if((hit.collider.gameObject.tag == "RisingTile") && hit.distance <= 0.1)
 			{
-				Debug.Log("A");
+				//Debug.Log("A");
 				gameObject.transform.parent = hit.collider.gameObject.transform;
 			}
 			else if(hit.collider.gameObject.name == "RisingWaterEnter")
@@ -53,7 +53,7 @@ public class CharacterPlatform : MonoBehaviour
 			}
 			else if(hit.collider.gameObject.tag == "SteppingStone" && hit.distance <= 0.1)// gameObject.transform.position.y <= -5.4)
 			{
-				Debug.Log(hit.distance);
+				//Debug.Log(hit.distance);
 				gameObject.transform.parent = null;//hit.collider.gameObject.transform;
 				SteppingStone steppingStoneScript = hit.collider.gameObject.GetComponent<SteppingStone>();
 				steppingStoneScript.TriggerFall();

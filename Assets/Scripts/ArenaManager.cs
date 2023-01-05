@@ -22,6 +22,8 @@ public class ArenaManager : MonoBehaviour
 	[SerializeField] private float testZ;
 	[SerializeField] private float testRot;
 	
+	public GameObject[] savePoints = new GameObject[4];
+	
 	//public Canvas pauseScreen;
 	//private bool paused = false;
 	
@@ -32,19 +34,33 @@ public class ArenaManager : MonoBehaviour
 		//this.pauseScreen.enabled = false;
 		Time.timeScale = 1;
 		
-		// location that character begins at
+		this.gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 		Vector3 startLoc = Vector3.zero;
 		float yRot = 0;
-		if(useTestLoc)
+		Debug.Log("ArenaManager: SpawnPoint " + gameManagerScript.getSpawnPoint().ToString());
+		if(gameManagerScript.getSpawnPoint() == -1)
 		{
-			startLoc = new Vector3(testX, testY, testZ);
-			yRot = startRot;
-			
+			// location that character begins at
+			if(useTestLoc)
+			{
+				startLoc = new Vector3(testX, testY, testZ);
+				yRot = startRot;
+			}
+			else
+			{
+				startLoc = new Vector3(startX, startY, startZ);
+				yRot = testRot;
+			}
 		}
 		else
 		{
-			startLoc = new Vector3(startX, startY, startZ);
-			yRot = testRot;
+			int spawnID = gameManagerScript.getSpawnPoint();
+			startLoc = this.savePoints[spawnID].transform.position + Vector3.down*1.995f;
+			yRot = gameManagerScript.getSpawnRotation();
+			for(int i = 0; i <= spawnID; i++)
+			{
+				this.savePoints[i].SetActive(false);
+			}
 		}
 		
 		// this block should only be executed during testing

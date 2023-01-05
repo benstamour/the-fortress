@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
 	private int numAttempts = 0;
 	private string character = "";
 	
+	private int spawnPoint = -1;
+	private float spawnRot = 0;
+	
 	/*public AudioClip menuSoundtrack;
 	public AudioClip arenaSoundtrack;
 	public AudioClip buttonClip;
@@ -62,6 +65,26 @@ public class GameManager : MonoBehaviour
 	public float getTime()
 	{
 		return this.timeTaken;
+	}
+	
+	public void setSpawnPoint(int spawnPoint)
+	{
+		this.spawnPoint = spawnPoint;
+	}
+	
+	public int getSpawnPoint()
+	{
+		return this.spawnPoint;
+	}
+	
+	public void setSpawnRotation(float spawnRot)
+	{
+		this.spawnRot = spawnRot;
+	}
+	
+	public float getSpawnRotation()
+	{
+		return this.spawnRot;
 	}
 	
 	/*public void LoadStartScreen()
