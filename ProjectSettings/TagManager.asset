@@ -10,6 +10,8 @@ TagManager:
   - GrassSphere
   - RisingTile
   - SteppingStone
+  - EndZone
+  - SavePoint
   layers:
   - Default
   - TransparentFX

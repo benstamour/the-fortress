@@ -18,7 +18,7 @@ public class Character : MonoBehaviour
 	private Vector3 rotation;
 	[SerializeField] private bool isActive = true; // should the character be allowed to move? (false when player reaches end zone)
 	[SerializeField] private float scaleVal = 1.5f; // different character prefabs have different collider values due to scaling
-	private float multiplier;
+	private float multiplier; // scaled height of character relative to scale of 1.5
 	
 	// game data
 	private int score = 0; // number of orbs collected
@@ -176,12 +176,19 @@ public class Character : MonoBehaviour
 		}
     }
 	
-	// triggered when player enters end zone
+	// triggered when player enters end zone or save point
 	void OnTriggerEnter(Collider other)
 	{
 		if(other.gameObject.tag == "EndZone")
 		{
 			this.EndZone();
+		}
+		else if(other.gameObject.tag == "SavePoint")
+		{
+			// save time and score data
+			this.gameManagerScript.addSavePointTime(Time.time - this.startTime);
+			this.gameManagerScript.addSavePointScore(this.score);
+			this.startTime = Time.time;
 		}
 	}
 	
@@ -191,8 +198,19 @@ public class Character : MonoBehaviour
 		this.isActive = false;
 		float totalTime = Time.time - this.startTime;
 		
-		this.gameManagerScript.setScore(this.score);
-		this.gameManagerScript.setTime(totalTime);
+		// if save points are enabled, add score and time from this run to saved data
+		if(gameManagerScript.getSavePointsEnabled())
+		{
+			this.gameManagerScript.addSavePointScore(this.score);
+			this.gameManagerScript.addSavePointTime(Time.time - this.startTime);
+			//ArenaManager arenaManagerScript = GameObject.Find("ArenaManager").GetComponent<ArenaManager>();
+			//this.gameManagerScript.setOrbsCollected(arenaManagerScript.getOrbsCollected());
+		}
+		else
+		{
+			this.gameManagerScript.setScore(this.score);
+			this.gameManagerScript.setTime(totalTime);
+		}
 		
 		//SceneManager.LoadScene("EndScreen");
 		this.gameManagerScript.EndZone();
@@ -208,16 +226,17 @@ public class Character : MonoBehaviour
 		return this.animator.GetCurrentAnimatorStateInfo(0).length > this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 	}
 	
+	// is the character going through a specific animation?
 	private bool AnimPlaying(string stateName)
 	{
 		return AnimPlaying() && this.animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
 	}
-	
 	private bool AnimPlayingTag(string tagName)
 	{
 		return AnimPlaying() && this.animator.GetCurrentAnimatorStateInfo(0).IsTag(tagName);
 	}
 	
+	// is the player jumping?
 	public bool getJumping()
 	{
 		return animator.GetBool("isJumping");
@@ -227,6 +246,7 @@ public class Character : MonoBehaviour
 	// character from jumping onto higher surfaces
 	IEnumerator ChangeCharController(int dir)
 	{
+		// if character is coming down from a jump
 		if(dir == 0)
 		{
 			float timeToChange = 1f;
@@ -250,6 +270,7 @@ public class Character : MonoBehaviour
 				yield return null;
 			}
 		}
+		// if character is jumping up
 		else
 		{
 			float timeToChange = 3f;

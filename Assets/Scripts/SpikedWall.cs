@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// unused script
 public class SpikedWall : MonoBehaviour
 {
 	[SerializeField] private float speed = 2f;

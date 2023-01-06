@@ -37,6 +37,7 @@ public class KillPlayer : MonoBehaviour
 		}
     }
 	
+	// respawn when hit by laser
 	public void LaserHit()
 	{
 		Respawn();

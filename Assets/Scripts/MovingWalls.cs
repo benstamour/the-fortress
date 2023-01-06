@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// script for sliding spiked walls
 public class MovingWalls : MonoBehaviour
 {
 	[SerializeField] private int dir;
@@ -21,6 +22,7 @@ public class MovingWalls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		// handles movement of spiked walls
         if(this.dir == 0)
 		{
 			this.transform.position = Vector3.MoveTowards(this.transform.position, this.startPos + this.dir0, speed*Time.deltaTime);

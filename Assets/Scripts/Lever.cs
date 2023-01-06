@@ -30,7 +30,6 @@ public class Lever : MonoBehaviour
 		// if the player presses E while near the lever, activate it
         if (Input.GetKeyDown(KeyCode.E) && NearView())
 		{
-			Debug.Log("A");
 			activate();
 		}
     }
@@ -41,7 +40,7 @@ public class Lever : MonoBehaviour
 			anim.SetBool("LeverUp", false); // triggers lever animation
 			activated = true;
 			
-			//this.gameManagerScript.PlayLeverClip();
+			this.gameManagerScript.PlayLeverClip();
 			
 			StartCoroutine(CheckAnim()); // waits for lever animation to complete before triggering effects
 

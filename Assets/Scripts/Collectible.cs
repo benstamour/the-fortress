@@ -7,12 +7,21 @@ public class Collectible : MonoBehaviour
 {
 	private int rotation = 0;
 	private float sum = 0f;
-	//private GameManager gameManagerScript;
+	private GameManager gameManagerScript;
+	private ArenaManager arenaManagerScript;
+	private int id = -1;
 	
     // Start is called before the first frame update
     void Start()
     {
-		//this.gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+		this.gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+		this.arenaManagerScript = GameObject.Find("ArenaManager").GetComponent<ArenaManager>();
+		this.id = this.arenaManagerScript.curOrbID; // unique ID to identify which orbs have been collected
+		this.arenaManagerScript.incrementCurOrbID(); // ensure no other orb has same ID
+		if(this.gameManagerScript.getOrbCollected(this.id)) // if orb has already been collected by player, remove it
+		{
+			gameObject.transform.parent.gameObject.SetActive(false);
+		}
     }
 
     // Update is called once per frame
@@ -47,30 +56,31 @@ public class Collectible : MonoBehaviour
 		
 	}
 	
-	/*void OnCollisionEnter(Collision col)
-	{
-		if(col.gameObject.tag == "Character")
-		{
-			characterScript.IncrementScore();
-			this.transform.parent.gameObject.SetActive(false);
-		}
-	}*/
-	
-	// when character collides with orbs, add one to their score and set the orb object to inactive
+	// when character collides with orbs, increment their score and set the orb object to inactive
 	void OnTriggerEnter(Collider other)
 	{
 		if(other.gameObject.tag == "Character")
 		{
-			/*try
+			try
 			{
 				this.gameManagerScript.PlayOrbClip();
 			}
 			catch
 			{
-			}*/
+			}
 			Character characterScript = other.gameObject.GetComponent<Character>();
 			characterScript.IncrementScore();
+			this.arenaManagerScript.setOrbCollected(this.id, true);
 			this.transform.parent.gameObject.SetActive(false);
 		}
+	}
+	
+	public void setID(int id)
+	{
+		this.id = id;
+	}
+	public int getID()
+	{
+		return this.id;
 	}
 }

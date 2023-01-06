@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// script for rising water trap and scales poison water
 public class RisingWater : MonoBehaviour
 {
 	[SerializeField] private float speed = 2f;
 	private Vector3 startScale = Vector3.zero;
 	private Vector3 targetScale = Vector3.zero;
-	[SerializeField] private float increase;
+	[SerializeField] private float increase; // how much water level should rise by
 	private bool waterTriggered = false;
 	
     // Start is called before the first frame update
@@ -19,6 +20,7 @@ public class RisingWater : MonoBehaviour
 
     void FixedUpdate()
     {
+		// if water has been triggered, handle scaling
 		if(this.waterTriggered)
 		{
 			Vector3 curScale = this.gameObject.transform.localScale;
