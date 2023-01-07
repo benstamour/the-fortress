@@ -158,7 +158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 149, y: 120}
+  m_AnchoredPosition: {x: 149, y: 110}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &146071154
@@ -589,7 +589,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -272.85385, y: 46.68214}
+  m_AnchoredPosition: {x: -272.85385, y: 37.4502}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &402318019
@@ -612,10 +612,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Escape the fortress by navigating the obstacles on your way! For an additional
+  m_text: 'Escape the fortress by navigating the obstacles on your way! For an additional
     challenge, see if you can collect the 6 coloured orbs placed throughout the area.
-    The white orbs function as save points, allowing you to respawn there instead
-    of at the beginning.
+    The white orbs function as save points, allowing you to
+
+    respawn there after
+    dying.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: abd5f6e084e817e4abf264b999e75bc8, type: 2}
   m_sharedMaterial: {fileID: -8064937942978844315, guid: abd5f6e084e817e4abf264b999e75bc8, type: 2}

@@ -155,7 +155,7 @@ public class LaserMachine : MonoBehaviour {
 						
 						if(hitInfo3D.collider.gameObject.tag == "Character")
 						{
-							Debug.Log(gameObject.name);
+							//Debug.Log(gameObject.name);
 							KillPlayer killScript = hitInfo3D.collider.gameObject.GetComponent<KillPlayer>();
 							killScript.LaserHit();
 						}
