@@ -110,6 +110,7 @@ public class GameManager : MonoBehaviour
 		this.numAttempts = 0;
 		this.spawnPoint = -1;
 		this.spawnRot = 0;
+		this.orbsCollected = new bool[6];
 		
 		// play menu soundtrack
 		AudioSource audioSource = this.audioSource1;
