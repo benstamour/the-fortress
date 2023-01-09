@@ -525,7 +525,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuSoundtrack: {fileID: 8300000, guid: cf0a92ab1d54d4fa2a81417a540f694b, type: 3}
-  arenaSoundtrack: {fileID: 8300000, guid: 42473177e27deec47a049056af08c108, type: 3}
+  arenaSoundtrack: {fileID: 8300000, guid: 031bbb98a7e1a3c4684afe0c45789da8, type: 3}
   buttonClip: {fileID: 8300000, guid: 50861ff83c3a47142bb397f7cf079c06, type: 3}
   orbClip: {fileID: 8300000, guid: cfce0cea076109f478783201b2a9f57f, type: 3}
   leverClip: {fileID: 8300000, guid: db437390a38d0ab4a94c097a9e6022fc, type: 3}

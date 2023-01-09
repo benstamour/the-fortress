@@ -31,9 +31,19 @@ public class LaserLion : MonoBehaviour
 	
 	
 	// when player steps on the floor, laser lions are activated
+	// replaced with trigger plane
 	void OnCollisionEnter(Collision col)
 	{
 		if(col.gameObject.tag == "Character")
+		{
+			this.triggered = true;
+		}
+	}
+	
+	// when player goes through trigger plane, laser lions are activated
+	void OnTriggerEnter(Collider other)
+	{
+		if(other.gameObject.tag == "Character")
 		{
 			this.triggered = true;
 		}
