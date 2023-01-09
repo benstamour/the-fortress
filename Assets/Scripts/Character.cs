@@ -9,6 +9,7 @@ public class Character : MonoBehaviour
 {
 	// for character movement
 	private CharacterController characterController;
+	private CapsuleCollider capsuleCollider;
 	private float speed = 5f;
 	private Vector3 playerVelocity;
 	private bool groundedPlayer;
@@ -39,6 +40,7 @@ public class Character : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+		capsuleCollider = GetComponent<CapsuleCollider>();
 		this.startTime = Time.time;
 		this.gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 		this.gameManagerScript.incrementAttempts();
@@ -242,16 +244,24 @@ public class Character : MonoBehaviour
 		return animator.GetBool("isJumping");
 	}
 	
-	// temporarily change character controller size when jumping so that it doesn't block the
+	// temporarily change character controller and capsule collider size when jumping so that it doesn't block the
 	// character from jumping onto higher surfaces
 	IEnumerator ChangeCharController(int dir)
 	{
 		// if character is coming down from a jump
 		if(dir == 0)
 		{
-			float timeToChange = 1f;
-			float centerChange = -0.2f/timeToChange;
+			float timeToChange = 4f;
+			/*float centerChange = -0.2f/timeToChange;
 			float heightChange = 0.6f/timeToChange;
+			float targetCenter = 0.8f/this.multiplier;
+			float targetHeight = 1.6f/this.multiplier;*/
+			/*float centerChange = -0.55f/timeToChange;
+			float heightChange = 0.4f/timeToChange;
+			float targetCenter = 0.8f/this.multiplier;
+			float targetHeight = 1.6f/this.multiplier;*/
+			float centerChange = -0.45f/timeToChange;
+			float heightChange = 0.35f/timeToChange;
 			float targetCenter = 0.8f/this.multiplier;
 			float targetHeight = 1.6f/this.multiplier;
 			while(true)
@@ -259,12 +269,16 @@ public class Character : MonoBehaviour
 				Vector3 center = this.characterController.center;
 				float height = this.characterController.height;
 				this.characterController.center = new Vector3(0, this.characterController.center.y + centerChange * Time.deltaTime, 0);
+				this.capsuleCollider.center = new Vector3(0, this.capsuleCollider.center.y + centerChange * Time.deltaTime, 0);
 				this.characterController.height += heightChange * Time.deltaTime;
+				this.capsuleCollider.height += heightChange * Time.deltaTime;
 				//Debug.Log("A" + this.characterController.height.ToString() + " " + this.characterController.center.ToString());
 				if(Math.Abs(this.characterController.height - targetHeight) <= 0.05 && Math.Abs(this.characterController.center.y - targetCenter) <= 0.05)
 				{
 					this.characterController.height = targetHeight;
+					this.capsuleCollider.height = targetHeight;
 					this.characterController.center = new Vector3(0, targetCenter, 0);
+					this.capsuleCollider.center = new Vector3(0, targetCenter, 0);
 					break;
 				}
 				yield return null;
@@ -273,22 +287,34 @@ public class Character : MonoBehaviour
 		// if character is jumping up
 		else
 		{
-			float timeToChange = 3f;
-			float centerChange = 0.2f/timeToChange;
+			float timeToChange = 4f;
+			/*float centerChange = 0.2f/timeToChange;
 			float heightChange = -0.6f/timeToChange;
 			float targetCenter = 1.0f/this.multiplier;
-			float targetHeight = 1.1f/this.multiplier;
+			float targetHeight = 1.1f/this.multiplier;*/
+			/*float centerChange = 0.55f/timeToChange;
+			float heightChange = -0.4f/timeToChange;
+			float targetCenter = 1.35f/this.multiplier;
+			float targetHeight = 1.2f/this.multiplier;*/
+			float centerChange = 0.45f/timeToChange;
+			float heightChange = -0.35f/timeToChange;
+			float targetCenter = 1.25f/this.multiplier;
+			float targetHeight = 1.25f/this.multiplier;
 			while(true)
 			{
 				Vector3 center = this.characterController.center;
 				float height = this.characterController.height;
 				this.characterController.center = new Vector3(0, this.characterController.center.y + centerChange * Time.deltaTime, 0);
+				this.capsuleCollider.center = new Vector3(0, this.capsuleCollider.center.y + centerChange * Time.deltaTime, 0);
 				this.characterController.height += heightChange * Time.deltaTime;
+				this.capsuleCollider.height += heightChange * Time.deltaTime;
 				//Debug.Log("B" + this.characterController.height.ToString() + " " + this.characterController.center.ToString());
 				if(Math.Abs(this.characterController.height - targetHeight) <= 0.2 && Math.Abs(this.characterController.center.y - targetCenter) <= 0.05)
 				{
 					this.characterController.height = targetHeight;
+					this.capsuleCollider.height = targetHeight;
 					this.characterController.center = new Vector3(0, targetCenter, 0);
+					this.capsuleCollider.center = new Vector3(0, targetCenter, 0);
 					break;
 				}
 				yield return null;
